@@ -2,15 +2,24 @@ console.log("hello")
 
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext('2d')
+const img = document.getElementById("playerSprite")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 
-ctx.fillStyle = 'green';
-ctx.strokeStyle = 'green';
-ctx.lineWidth = 5;
+// const guyUrl = "homiequest-1.png.png"
 
+// class Sprite {
+//     constructor(x, y, size, url,) {
+//         this.x = x,
+//         this.y = y,
+//         this.size = size,
+//         this.url = url
+//         this.render = function () {
 
+//         }
+//     }
+// }
 
 
 
@@ -30,7 +39,7 @@ class Guy {
     }
 }
 //create a placeholder player character
-let player = new Guy(10, 200, "grey", 20, 20)
+let player = new Guy(10, 200, "grey", 45, 45)
 //create 3 road stripes for now
 let stripe1 = new Guy(0, 240, "yellow", 75, 10)
 let stripe2 = new Guy(175, 240, "yellow", 75, 10)
@@ -50,18 +59,19 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
     
+    
 
 })
 const gameloop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-
+    
     upperGrass.render()
     lowerGrass.render()
     stripe1.render()
     stripe2.render()
     stripe3.render()
     stripe4.render()
-    player.render()
+    ctx.drawImage(img, 10, 200, 50, 50)
     car1.render()
     car2.render()
     if(player.x > 681){player.x = 10}
@@ -80,12 +90,12 @@ const gameloop = () => {
 const moveCar1 = setInterval(()=>{
     if (car1.x < -1200) {car1.x = 700}
     car1.x -= 20
-}, 60)
+}, 40)
 
 const moveCar2 = setInterval(()=>{
     if (car2.x < -800) {car2.x = 700}
     car2.x -= 20
-}, 80)
+}, 60)
 
 const movementHandler = (e) => {
     switch (e.keyCode) {
