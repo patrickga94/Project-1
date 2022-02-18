@@ -1,5 +1,5 @@
 # Project-1-Homie-Quest
-Homie quest is a game where you dodge obstacles to make it to your homeie's party!
+Homie quest is a side-scrolling game where you dodge obstacles to make it to your homeie's party!
 
 ## User Story:
 - As a user I want to click to start to play
