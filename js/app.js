@@ -21,6 +21,7 @@ class Guy {
         this.color = color,
         this.height = height,
         this.width = width,
+        this.health = 3
         this.alive = true,
         this.render = function () {
             ctx.fillStyle = this.color
@@ -29,24 +30,62 @@ class Guy {
     }
 }
 //create a placeholder player character
-let player = new Guy(10, 200, "green", 16, 16)
-//create a road stripe for now
-let stripe = new Guy(350, 240, "green", 60, 10)
+let player = new Guy(10, 200, "grey", 20, 20)
+//create 3 road stripes for now
+let stripe1 = new Guy(0, 240, "yellow", 75, 10)
+let stripe2 = new Guy(175, 240, "yellow", 75, 10)
+let stripe3 = new Guy(350, 240, "yellow", 75, 10)
+let stripe4 = new Guy(525, 240, "yellow", 75, 10)
+let upperGrass = new Guy(0, 0, "green", 700, 125)
+let lowerGrass = new Guy(0, 375, "green", 700, 125)
+let car1 = new Guy (700, 136, "red", 100, 75)
+let car2 = new Guy (700, 260, "blue", 100, 75)
 
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('keydown', movementHandler)
     setInterval(gameloop, 60)
+    setInterval(moveCar1, 2000)
+    setInterval(moveCar2, 1000)
+    
+    
+    
+    
 
 })
 const gameloop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillRect(0, 0, 700, 125)
-    ctx.strokeRect(0, 0, 700, 125)
-    ctx.fillRect(0, 375, 700, 125)
-    ctx.strokeRect(0, 375, 700, 125)
+
+    upperGrass.render()
+    lowerGrass.render()
+    stripe1.render()
+    stripe2.render()
+    stripe3.render()
+    stripe4.render()
     player.render()
-    stripe.render()
+    car1.render()
+    car2.render()
+    if(player.x > 681){player.x = 10}
+    if(player.x < -21){player.x = 680}
+    if(stripe1.x < -125){stripe1.x = 700}
+    if(stripe1.x > 826){stripe1.x = -124}
+    if(stripe2.x < -125){stripe2.x = 700}
+    if(stripe2.x > 826){stripe2.x = -124}
+    if(stripe3.x < -125){stripe3.x = 700}
+    if(stripe3.x > 826){stripe3.x = -124}
+    if(stripe4.x < -125){stripe4.x = 700}
+    if(stripe4.x > 826){stripe4.x = -124}
+    // if(car.x < -300){car.x = 700}
 }
+
+const moveCar1 = setInterval(()=>{
+    if (car1.x < -1200) {car1.x = 700}
+    car1.x -= 20
+}, 60)
+
+const moveCar2 = setInterval(()=>{
+    if (car2.x < -800) {car2.x = 700}
+    car2.x -= 20
+}, 80)
 
 const movementHandler = (e) => {
     switch (e.keyCode) {
@@ -54,49 +93,27 @@ const movementHandler = (e) => {
         // move the player up
             player.y -= 10
             break
-        // move the player left
+        // move the player left and the stripe to the right
         case(65):
             player.x -= 10
-            stripe.x +=10
+            stripe1.x +=10
+            stripe2.x +=10
+            stripe3.x +=10
+            stripe4.x +=10
             break
         // move the player down
         case (83):
             player.y += 10
             break
-        // move the player right
+        // move the player right and the stripe to the left
         case(68):
             player.x += 10
-            stripe.x -=10
+            stripe1.x -=10
+            stripe2.x -=10
+            stripe3.x -=10
+            stripe4.x -=10
             break
 
     }
 }
 
-// const movementHandler = (e) => {
-//     //we can use if..else and key codes to determine player movement
-//     //keycodes refer to specific keyboard keys with a number
-//     //if we want to use wasd the key codes are as follows:
-//     //w=87 a=65, s=83, d=68
-//     //up=38, down=40, left=37, right=39
-//     //we can use a switch case which can be handy when we have multiple possibilities
-//     //switch case has a main switch, cases (which are our inputs in this instance)
-//     //we also need to break out of our cases using the keyword break
-//     switch (e.keyCode) {
-//         case (87):
-//             //we'll move the player up
-//             player.y -= 10
-//             //then break the case
-//             break
-//         case (65):
-//             //move the player left
-//             player.x -= 10
-//             break
-//         case (83):
-//             //move player down
-//             player.y += 10
-//             break
-//         case (68):
-//             player.x +=10
-//             break
-//     }
-// }
