@@ -11,6 +11,7 @@ h1 {
 img {
     height: 40px;
     width: 40px;
+    display: none;
 }
 #container {
     display: flex;
