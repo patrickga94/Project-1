@@ -1,6 +1,7 @@
 console.log("hello")
 
 const intro = document.getElementById("introScreen")
+const deathScreen = document.getElementById("deathScreen")
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext('2d')
 const img = document.getElementById("playerSprite")
@@ -72,32 +73,82 @@ let homie = new Sprite (myHomie, 650, 250, 150, 150)
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('keydown', movementHandler)
     intro.addEventListener("click", ()=>{
+        intro.style.display = "none"
         const runGame = setInterval(gameloop, 60)
-        setInterval(() =>{
+        const isDead = setInterval(() =>{
             if(player.alive === false) {
                 clearInterval(runGame)
+                clearInterval(isHit)
+                clearInterval(isWin)
+                clearTimeout(moveCar1)
+                clearTimeout(moveCar2)
+                clearTimeout(moveBus)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
+                deathScreen.style.display = "block"
+                clearInterval(isDead)
+
             }
+        })
+
+        const isHit = setInterval(detectHit, 60)
+        const isWin = setInterval(detectWin, 60)
+        const moveCar1 = setTimeout(carFunc, 1000)
+        const moveCar2 = setTimeout(carFunc2, 5000)
+        const moveBus = setTimeout(busFunc, 10000)
+
+        setInterval(()=>{
+            if(player.win){
+                clearInterval(isHit)
+                clearInterval(runGame)
+                setInterval(winLoop, 60)
+            }
+        }, 60)
+        })
+
+    deathScreen.addEventListener("click", ()=>{
+        player.health = 3
+        player.alive = true
+        player.x = 10
+        player.y = 200
+        car1.x = 800
+        car2.x = 800
+        bus1.x = 800
+        house.x = 800
+        playerDistance = 0
+        console.log("hello")
+        deathScreen.style.display = "none"
+        const runGame = setInterval(gameloop, 60)
+        const isDead = setInterval(() =>{
+            if(player.alive === false) {
+                clearInterval(runGame)
+                clearInterval(isHit)
+                clearInterval(isWin)
+                clearTimeout(moveCar1)
+                clearTimeout(moveCar2)
+                clearTimeout(moveBus)
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                deathScreen.style.display = "block"
+                clearInterval(isDead)
+
+            }
+        })
+
+        const isHit = setInterval(detectHit, 60)
+        const isWin = setInterval(detectWin, 60)
+        const moveCar1 = setTimeout(carFunc, 1000)
+        const moveCar2 = setTimeout(carFunc2, 5000)
+        const moveBus = setTimeout(busFunc, 10000)
+
+
+        setInterval(()=>{
+            if(player.win){
+                clearInterval(isHit)
+                clearInterval(runGame)
+                setInterval(winLoop, 60)
+            }
+        }, 60)
     })
 
-    setInterval(detectHit, 60)
-    setInterval(detectWin, 60)
-    setTimeout(carFunc, 1000)
-    setTimeout(carFunc2, 5000)
-    setTimeout(busFunc, 10000)
-    // setInterval(() =>{
-    //     if(player.alive === false) {
-    //         clearInterval(runGame)
-    //         ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //     }
-    }, 60)
-    setInterval(()=>{
-        if(player.win){
-            clearInterval(runGame)
-            setInterval(winLoop, 60)
-        }
-    }, 60)
-    // if(player.alive === false){clearInterval(runGame)}
     
     
     
@@ -121,7 +172,7 @@ const gameloop = () => {
     bus1.draw()
     if(player.x > 352){player.x = 350}
     if(player.x < 0){player.x = 0}
-    if(player.y < 120){player.y = 130}
+    if(player.y < 110){player.y = 115}
     if(player.y > 326){player.y = 325}
     if(stripe1.x < -125){stripe1.x = 800}
     if(stripe1.x > 826){stripe1.x = -124}
@@ -156,6 +207,7 @@ const moveCar1 = setInterval(()=>{
     // console.log("firing")
     if (car1.x < -1200) {car1.x = 800}
     car1.x -= 20
+    if(player.alive === false){clearInterval(moveCar1)}
 }, 40)}
 //move the blue car
 const carFunc2 = () => {
@@ -163,6 +215,7 @@ const moveCar2 = setInterval(()=>{
     // console.log("firing")
     if (car2.x < -800) {car2.x = 800}
     car2.x -= 20
+    if (player.alive === false){clearInterval(moveCar2)}
 }, 60)}
 //move the bus
 const busFunc = () => {
@@ -170,6 +223,7 @@ const moveBus1 = setInterval(()=>{
     // console.log("firing")
     if (bus1.x < -1000){bus1.x = 800}
     bus1.x -= 10
+    if(player.alive === false){clearInterval(moveBus1)}
 }, 40)}
 
 const movementHandler = (e) => {
