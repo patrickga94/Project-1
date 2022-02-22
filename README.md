@@ -17,3 +17,10 @@ Homie quest is a side-scrolling game where you dodge obstacles to make it to you
 
 ## Wireframe:
 [whiteboard link] (https://miro.com/app/board/uXjVOLkjH64=/)
+
+
+make it look like the road is moving
+
+have the party show up after a given time
+
+get a rough version going
