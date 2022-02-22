@@ -67,12 +67,13 @@ let house = new Sprite (homieHouse, 800, 0, 125, 125)
 
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('keydown', movementHandler)
-    const runGame = setInterval(gameloop, 60)
-    setInterval(detectHit, 60)
-    //move the red car
-    setTimeout(moveCar1, 4000)
+    setTimeout(moveCar1, 1000)
     setTimeout(moveCar2, 5000)
     setTimeout(moveBus1, 10000)
+    const runGame = setInterval(gameloop, 60)
+    setInterval(detectHit, 60)
+
+
     console.log("player y is", player.y)
     // if(player.alive === false){clearInterval(runGame)}
     
@@ -109,20 +110,24 @@ const gameloop = () => {
     if(stripe4.x < -125){stripe4.x = 800}
     if(stripe4.x > 826){stripe4.x = -124}
     if(playerDistance >= 6000){house.draw()}
+    
 }
 
 //move the red car
 const moveCar1 = setInterval(()=>{
+    // console.log("firing")
     if (car1.x < -1200) {car1.x = 800}
     car1.x -= 20
 }, 40)
 //move the blue car
 const moveCar2 = setInterval(()=>{
+    // console.log("firing")
     if (car2.x < -800) {car2.x = 800}
     car2.x -= 20
 }, 60)
 //move the bus
 const moveBus1 = setInterval(()=>{
+    // console.log("firing")
     if (bus1.x < -1000){bus1.x = 800}
     bus1.x -= 20
 }, 40)
