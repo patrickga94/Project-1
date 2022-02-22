@@ -8,6 +8,12 @@ h1 {
     align-self: center;
 }
 
+#introScreen {
+    color: black;
+    background-color: white;
+    border: 2px solid white;
+}
+
 img {
     height: 40px;
     width: 40px;

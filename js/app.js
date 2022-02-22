@@ -1,5 +1,6 @@
 console.log("hello")
 
+const intro = document.getElementById("introScreen")
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext('2d')
 const img = document.getElementById("playerSprite")
@@ -7,6 +8,7 @@ const redCar = document.getElementById("redCar")
 const blueCar = document.getElementById("blueCar")
 const bus = document.getElementById("bus")
 const homieHouse = document.getElementById("house")
+const myHomie = document.getElementById("homie")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -46,6 +48,7 @@ class Block {
         this.width = width,
         this.health = 3
         this.alive = true,
+        this.win = false,
         this.render = function () {
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.height, this.width)
@@ -64,17 +67,36 @@ let car1 = new Sprite (redCar, 800, 136, 100, 50)
 let car2 = new Sprite (blueCar, 800, 280, 100, 60)
 let bus1 = new Sprite (bus, 800, 200,  200, 85)
 let house = new Sprite (homieHouse, 800, 0, 125, 125)
+let homie = new Sprite (myHomie, 650, 250, 150, 150)
 
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('keydown', movementHandler)
-    setTimeout(moveCar1, 1000)
-    setTimeout(moveCar2, 5000)
-    setTimeout(moveBus1, 10000)
-    const runGame = setInterval(gameloop, 60)
+    intro.addEventListener("click", ()=>{
+        const runGame = setInterval(gameloop, 60)
+        setInterval(() =>{
+            if(player.alive === false) {
+                clearInterval(runGame)
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+            }
+    })
+
     setInterval(detectHit, 60)
-
-
-    console.log("player y is", player.y)
+    setInterval(detectWin, 60)
+    setTimeout(carFunc, 1000)
+    setTimeout(carFunc2, 5000)
+    setTimeout(busFunc, 10000)
+    // setInterval(() =>{
+    //     if(player.alive === false) {
+    //         clearInterval(runGame)
+    //         ctx.clearRect(0, 0, canvas.width, canvas.height)
+    //     }
+    }, 60)
+    setInterval(()=>{
+        if(player.win){
+            clearInterval(runGame)
+            setInterval(winLoop, 60)
+        }
+    }, 60)
     // if(player.alive === false){clearInterval(runGame)}
     
     
@@ -113,24 +135,42 @@ const gameloop = () => {
     
 }
 
+// const gameplay = () => {
+//         const runGame = setInterval(gameloop, 60)
+// }
+
+//when you win
+const winLoop = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    player.x = 100
+    player.height = 150
+    player.width = 150
+    player.draw()
+    homie.draw()
+
+}
+
 //move the red car
+const carFunc = () => {
 const moveCar1 = setInterval(()=>{
     // console.log("firing")
     if (car1.x < -1200) {car1.x = 800}
     car1.x -= 20
-}, 40)
+}, 40)}
 //move the blue car
+const carFunc2 = () => {
 const moveCar2 = setInterval(()=>{
     // console.log("firing")
     if (car2.x < -800) {car2.x = 800}
     car2.x -= 20
-}, 60)
+}, 60)}
 //move the bus
+const busFunc = () => {
 const moveBus1 = setInterval(()=>{
     // console.log("firing")
     if (bus1.x < -1000){bus1.x = 800}
-    bus1.x -= 20
-}, 40)
+    bus1.x -= 10
+}, 40)}
 
 const movementHandler = (e) => {
     switch (e.keyCode) {
@@ -186,7 +226,15 @@ const detectHit = () => {
     if (player.health <= 0){
         player.alive = false
     }
-    // console.log("this is player health", player.health)
-    // console.log("this is car1.y", car1.y)
-    // console.log("this is car1.y + car1.height", (car1.y + car1.height))
+   
+}
+
+const detectWin = () => {
+    if(player.x + player.width > house.x
+        && player.x < house.x + house.width
+        && player.y < house.y + house.height
+        && player.y + player.height > house.y) {
+            player.win = true
+        }
+
 }
