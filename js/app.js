@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const isWin = setInterval(detectWin, 60)
         const moveCar1 = setTimeout(carFunc, 1000)
         const moveCar2 = setTimeout(carFunc2, 5000)
-        const moveBus = setTimeout(busFunc, 10000)
+        const moveBus = setTimeout(busFunc, 9000)
 
         setInterval(()=>{
             if(player.win){
@@ -151,10 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     
     
-    
-    
-    
-
 })
 const gameloop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -186,9 +182,7 @@ const gameloop = () => {
     
 }
 
-// const gameplay = () => {
-//         const runGame = setInterval(gameloop, 60)
-// }
+
 
 //when you win
 const winLoop = () => {
@@ -198,29 +192,36 @@ const winLoop = () => {
     player.width = 150
     player.draw()
     homie.draw()
+    // setInterval(()=>{
+    //     player.y += 10
+    //     homie.y-= 10
+    //     player.y -= 10
+    //     homie.y-= 10
+    // }, 500)
+    document.getElementById("winScreen").style.display = "block"
 
 }
 
 //move the red car
 const carFunc = () => {
 const moveCar1 = setInterval(()=>{
-    // console.log("firing")
+
     if (car1.x < -1200) {car1.x = 800}
-    car1.x -= 20
+    car1.x -= 15
     if(player.alive === false){clearInterval(moveCar1)}
 }, 40)}
 //move the blue car
 const carFunc2 = () => {
 const moveCar2 = setInterval(()=>{
-    // console.log("firing")
+
     if (car2.x < -800) {car2.x = 800}
-    car2.x -= 20
+    car2.x -= 17
     if (player.alive === false){clearInterval(moveCar2)}
 }, 60)}
 //move the bus
 const busFunc = () => {
 const moveBus1 = setInterval(()=>{
-    // console.log("firing")
+
     if (bus1.x < -1000){bus1.x = 800}
     bus1.x -= 10
     if(player.alive === false){clearInterval(moveBus1)}
@@ -230,29 +231,29 @@ const movementHandler = (e) => {
     switch (e.keyCode) {
         case(87):
         // move the player up
-            player.y -= 10
+            player.y -= 15
             break
         // move the player left and the stripes to the right
         case(65):
-            player.x -= 10
-            stripe1.x +=10
-            stripe2.x +=10
-            stripe3.x +=10
-            stripe4.x +=10
+            player.x -= 15
+            stripe1.x +=15
+            stripe2.x +=15
+            stripe3.x +=15
+            stripe4.x +=15
             if(playerDistance >=6000){house.x += 10}
             break
         // move the player down
         case (83):
-            player.y += 10
+            player.y += 15
             // imgY += 10
             break
         // move the player right and the stripes to the left
         case(68):
-            player.x += 10
-            stripe1.x -=10
-            stripe2.x -=10
-            stripe3.x -=10
-            stripe4.x -=10
+            player.x += 15
+            stripe1.x -=15
+            stripe2.x -=15
+            stripe3.x -=15
+            stripe4.x -=15
             if(playerDistance >= 6000){house.x -=10}
             playerDistance += 10
             break
@@ -268,6 +269,7 @@ const detectHit = () => {
         && player.y < car1.y + car1.height
         && player.y + player.height > car1.y) {
             player.health -= 1
+            
         }
     if(player.x + player.width > car2.x
         && player.x < car2.x + car2.width
@@ -280,6 +282,7 @@ const detectHit = () => {
     if (player.health <= 0){
         player.alive = false
     }
+    
    
 }
 
