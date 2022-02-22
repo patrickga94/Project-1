@@ -70,9 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const runGame = setInterval(gameloop, 60)
     setInterval(detectHit, 60)
     //move the red car
-    moveCar1
-    moveCar2
-    moveBus1
+    setTimeout(moveCar1, 4000)
+    setTimeout(moveCar2, 5000)
+    setTimeout(moveBus1, 10000)
     console.log("player y is", player.y)
     // if(player.alive === false){clearInterval(runGame)}
     
@@ -170,6 +170,14 @@ const detectHit = () => {
         && player.y + player.height > car1.y) {
             player.health -= 1
         }
+    if(player.x + player.width > car2.x
+        && player.x < car2.x + car2.width
+        && player.y < car2.y + car2.height
+        && player.y + player.height > car2.y) {
+            player.health -= 1
+        }
+
+
     if (player.health <= 0){
         player.alive = false
     }
