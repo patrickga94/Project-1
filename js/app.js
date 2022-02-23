@@ -173,11 +173,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const moveCar2 = setTimeout(carFunc2, 5000)
         const moveBus = setTimeout(busFunc, 9000)
 
-        setInterval(()=>{
+        const playerWon = setInterval(()=>{
             if(player.win){
                 clearInterval(isHit)
                 clearInterval(runGame)
-                setInterval(winLoop, 60)
+                winLoop()
+                clearInterval(playerWon)
             }
         }, 60)
         })
@@ -210,11 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
 
-        // setInterval(()=>{
-        //     if(player.health === 2){
-        //     clearInterval(isHit)
-        //     setTimeout(isHit, 1500)}
-        // }, 10)
+
         const isHit = setInterval(detectHit, 60)
         const isWin = setInterval(detectWin, 60)
         const moveCar1 = setTimeout(carFunc, 1000)
@@ -222,11 +219,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const moveBus = setTimeout(busFunc, 10000)
 
 
-        setInterval(()=>{
+        const playerWon = setInterval(()=>{
             if(player.win){
                 clearInterval(isHit)
                 clearInterval(runGame)
-                setInterval(winLoop, 60)
+                winLoop()
+                clearInterval(playerWon)
             }
         }, 60)
     })
@@ -271,16 +269,44 @@ const gameloop = () => {
 const winLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     player.x = 100
-    player.height = 150
-    player.width = 150
+    player.height = 100
+    player.width = 100
     player.draw()
+    // player.movePlayer()
     homie.draw()
+    setInterval(()=>{
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        player.x = 100
+        player.height = 100
+        player.width = 100
+        player.draw()
+        // player.movePlayer()
+        homie.draw()
+        player.y = 100
+        homie.y = 100
+        setTimeout(()=>{
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            player.x = 100
+            player.height = 100
+            player.width = 100
+            player.draw()
+            // player.movePlayer()
+            homie.draw()
+            player.y = 150
+            homie.y = 150
+        }, 1500)
+    }, 3000)
     // setInterval(()=>{
-    //     player.y += 10
-    //     homie.y-= 10
-    //     player.y -= 10
-    //     homie.y-= 10
-    // }, 500)
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    //     player.x = 100
+    //     player.height = 100
+    //     player.width = 100
+    //     player.draw()
+    //     // player.movePlayer()
+    //     homie.draw()
+    //     player.y = 150
+    //     homie.y = 150
+    // }, 2000)
     document.getElementById("winScreen").style.display = "block"
 
 }
@@ -345,6 +371,7 @@ const movementHandler = (e) => {
             stripe2.x +=10
             stripe3.x +=10
             stripe4.x +=10
+            // if(player.height === 100) {homie.x +=10}
             playerDistance -=10
             if(playerDistance >=6000){house.x += 10}
             break
@@ -359,6 +386,7 @@ const movementHandler = (e) => {
             stripe2.x -=10
             stripe3.x -=10
             stripe4.x -=10
+            // if(player.height === 100) {homie.x -=10}
             if(playerDistance >= 6000){house.x -=10}
             playerDistance += 10
             break
