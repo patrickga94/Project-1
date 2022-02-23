@@ -1,5 +1,5 @@
 console.log("hello")
-
+const game = document.getElementById("canvas")
 const intro = document.getElementById("introScreen")
 const deathScreen = document.getElementById("deathScreen")
 const canvas = document.getElementById("canvas")
@@ -33,6 +33,78 @@ class Sprite {
 
 
     }
+
+}
+
+class PlayerSprite {
+    constructor (image, x, y, width, height) {
+        this.image = image,
+        this.x = x,
+        this.y = y,
+        this.width = width,
+        this.height = height,
+        this.health = 3
+        this.alive = true
+        this.direction = {
+            up: false,
+            down: false,
+            right: false,
+            left: false
+        }
+        this.draw = function () {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
+        }
+
+
+    }
+            //add a setDirection method as well as an unsetDirection method.
+            setDirection = function (key) {
+                //pressing key(keydown), changes direction from false to true
+                if(key.toLowerCase() == "w") {this.direction.up = true}
+                if(key.toLowerCase() == "a") {this.direction.left = true}
+                if(key.toLowerCase() == "s") {this.direction.down = true}
+                if(key.toLowerCase() == "d") {this.direction.right = true}
+        
+            }
+            //this method will unset our direction when the key is lifted
+            unsetDirection = function (key) {
+                //pressing key(keydown), changes direction from false to true
+                if(key.toLowerCase() == "w") {this.direction.up = false}
+                if(key.toLowerCase() == "a") {this.direction.left = false}
+                if(key.toLowerCase() == "s") {this.direction.down = false}
+                if(key.toLowerCase() == "d") {this.direction.right = false}
+        
+            }
+            movePlayer = function () {
+                //movePlayer will take and look at the direction that is set
+                //movePlayer will then send the guy flying in that direction
+                //move up
+                if (this.direction.up){
+                    this.y -= 10
+                    //because we're tracking up movement we'll add our top of canvas case
+                    if(this.y <= 0){
+                        this.y = 0
+                    }
+                }
+                if (this.direction.left){
+                    this.x -= 10
+                    if(this.x <= 0){
+                        this.x = 0
+                    }
+                }
+                if (this.direction.down){
+                    this.y += 10
+                    if(this.y + this.height >= game.height){
+                        this.y = game.height - this.height
+                    }
+            }
+            if (this.direction.right){
+                this.x += 10
+                if(this.x + this.width >= game.width){
+                    this.x = game.width - this.width
+                }
+            }
+        }
 }
 
 
@@ -67,7 +139,7 @@ let stripe3 = new Block(400, 240, "yellow", 100, 10)
 let stripe4 = new Block(600, 240, "yellow", 100, 10)
 let upperGrass = new Block(0, 0, "green", 800, 125)
 let lowerGrass = new Block(0, 375, "green", 800, 125)
-let player = new Sprite (img, 10, 200, 50, 50)
+let player = new PlayerSprite (img, 10, 200, 50, 50)
 let car1 = new Sprite (redCar, 800, spawnLocation(), 100, 50)
 let car2 = new Sprite (blueCar, 800, spawnLocation(), 100, 60)
 let bus1 = new Sprite (bus, 800, 200,  150, 85)
@@ -173,6 +245,7 @@ const gameloop = () => {
     stripe4.render()
     if(player.alive){
     player.draw()}
+    player.movePlayer()
     car1.draw()
     car2.draw()
     bus1.draw()
@@ -245,15 +318,29 @@ const moveBus1 = setInterval(()=>{
     if(player.alive === false){clearInterval(moveBus1)}
 }, 40)}
 
+document.addEventListener("keydown", (e)=>{
+    //when the key is pressed change the direction according to the setDirection HeroCrawler method
+    player.setDirection(e.key)
+})
+
+document.addEventListener("keyup", (e)=>{
+    //now if any of the keys that are released correspond to a movement key
+    //change the corresponding direction to false
+    if(["w", "a", "s", "d"].includes(e.key)){
+        player.unsetDirection(e.key)
+    }
+})
+
+
 const movementHandler = (e) => {
     switch (e.keyCode) {
         case(87):
         // move the player up
-            player.y -= 10
+            // player.y -= 10
             break
         // move the player left and the stripes to the right
         case(65):
-            player.x -= 10
+            // player.x -= 10
             stripe1.x +=10
             stripe2.x +=10
             stripe3.x +=10
@@ -263,11 +350,11 @@ const movementHandler = (e) => {
             break
         // move the player down
         case (83):
-            player.y += 10
+            // player.y += 10
             break
         // move the player right and the stripes to the left
         case(68):
-            player.x += 10
+            // player.x += 10
             stripe1.x -=10
             stripe2.x -=10
             stripe3.x -=10
