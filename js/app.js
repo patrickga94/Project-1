@@ -119,9 +119,6 @@ class Block {
         this.color = color,
         this.height = height,
         this.width = width,
-        this.health = 3
-        this.alive = true,
-        this.win = false,
         this.render = function () {
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.height, this.width)
@@ -294,8 +291,8 @@ const winLoop = () => {
             homie.draw()
             player.y = 150
             homie.y = 150
-        }, 1500)
-    }, 3000)
+        }, 500)
+    }, 1000)
     // setInterval(()=>{
     //     ctx.clearRect(0, 0, canvas.width, canvas.height)
     //     player.x = 100

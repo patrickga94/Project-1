@@ -3,6 +3,7 @@ body {
     flex-direction: column;
     justify-content: center;
     background-color: aliceblue;
+    font-family: 'VT323', monospace;
 }
 h1 {
     align-self: center;
@@ -11,21 +12,27 @@ h1 {
 #introScreen {
     color: black;
     background-color: white;
-    border: 2px solid black;
+    border: 2px dotted black;
+    border-radius: 10px;
+    padding: 20px;
 }
 
 #deathScreen {
     color: black;
     background-color: white;
-    border: 2px solid black;
+    border: 2px dotted black;
     display: none;
+    border-radius: 10px;
+    padding: 20px;
 }
 
 #winScreen {
     color: black;
     background-color: white;
-    border: 2px solid black;
+    border: 2px dotted black;
     display: none;
+    border-radius: 10px;
+    padding: 20px;
 }
 
 img {
@@ -42,4 +49,5 @@ img {
     background-color: rgb(22, 21, 21);
     width: 800px;
     height: 500px;
+    border: 10px solid black;
 }
