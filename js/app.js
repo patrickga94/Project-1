@@ -57,6 +57,10 @@ class Block {
     }
 }
 
+const spawnLocation = () => {
+    return Math.floor(Math.random() * (315-125) + 125)
+}
+
 let stripe1 = new Block(0, 240, "yellow", 100, 10)
 let stripe2 = new Block(200, 240, "yellow", 100, 10)
 let stripe3 = new Block(400, 240, "yellow", 100, 10)
@@ -64,11 +68,12 @@ let stripe4 = new Block(600, 240, "yellow", 100, 10)
 let upperGrass = new Block(0, 0, "green", 800, 125)
 let lowerGrass = new Block(0, 375, "green", 800, 125)
 let player = new Sprite (img, 10, 200, 50, 50)
-let car1 = new Sprite (redCar, 800, 136, 100, 50)
-let car2 = new Sprite (blueCar, 800, 290, 100, 60)
+let car1 = new Sprite (redCar, 800, spawnLocation(), 100, 50)
+let car2 = new Sprite (blueCar, 800, spawnLocation(), 100, 60)
 let bus1 = new Sprite (bus, 800, 200,  150, 85)
 let house = new Sprite (homieHouse, 800, 0, 125, 125)
 let homie = new Sprite (myHomie, 650, 250, 150, 150)
+
 
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('keydown', movementHandler)
@@ -170,7 +175,7 @@ const gameloop = () => {
     player.draw()}
     car1.draw()
     car2.draw()
-    bus1.draw()
+    // bus1.draw()
     if(player.x > 352){player.x = 350}
     if(player.x < 0){player.x = 0}
     if(player.y < 110){player.y = 115}
@@ -211,7 +216,10 @@ const winLoop = () => {
 const carFunc = () => {
 const moveCar1 = setInterval(()=>{
 
-    if (car1.x < -1200) {car1.x = 800}
+    if (car1.x < -1200) {
+        car1.x = 800
+        car1.y = spawnLocation()
+        }
     car1.x -= 15
     if(player.alive === false){clearInterval(moveCar1)}
 }, 40)}
@@ -219,7 +227,10 @@ const moveCar1 = setInterval(()=>{
 const carFunc2 = () => {
 const moveCar2 = setInterval(()=>{
 
-    if (car2.x < -800) {car2.x = 800}
+    if (car2.x < -800) {
+        car2.x = 800
+        car2.y = spawnLocation()
+        }
     car2.x -= 17
     if (player.alive === false){clearInterval(moveCar2)}
 }, 60)}
