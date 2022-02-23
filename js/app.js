@@ -65,8 +65,8 @@ let upperGrass = new Block(0, 0, "green", 800, 125)
 let lowerGrass = new Block(0, 375, "green", 800, 125)
 let player = new Sprite (img, 10, 200, 50, 50)
 let car1 = new Sprite (redCar, 800, 136, 100, 50)
-let car2 = new Sprite (blueCar, 800, 280, 100, 60)
-let bus1 = new Sprite (bus, 800, 200,  200, 85)
+let car2 = new Sprite (blueCar, 800, 290, 100, 60)
+let bus1 = new Sprite (bus, 800, 200,  150, 85)
 let house = new Sprite (homieHouse, 800, 0, 125, 125)
 let homie = new Sprite (myHomie, 650, 250, 150, 150)
 
@@ -133,6 +133,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
 
+        // setInterval(()=>{
+        //     if(player.health === 2){
+        //     clearInterval(isHit)
+        //     setTimeout(isHit, 1500)}
+        // }, 10)
         const isHit = setInterval(detectHit, 60)
         const isWin = setInterval(detectWin, 60)
         const moveCar1 = setTimeout(carFunc, 1000)
@@ -222,8 +227,8 @@ const moveCar2 = setInterval(()=>{
 const busFunc = () => {
 const moveBus1 = setInterval(()=>{
 
-    if (bus1.x < -1000){bus1.x = 800}
-    bus1.x -= 10
+    if (bus1.x < -1000){bus1.x = 874}
+    bus1.x -= 11
     if(player.alive === false){clearInterval(moveBus1)}
 }, 40)}
 
@@ -231,29 +236,29 @@ const movementHandler = (e) => {
     switch (e.keyCode) {
         case(87):
         // move the player up
-            player.y -= 15
+            player.y -= 10
             break
         // move the player left and the stripes to the right
         case(65):
-            player.x -= 15
-            stripe1.x +=15
-            stripe2.x +=15
-            stripe3.x +=15
-            stripe4.x +=15
+            player.x -= 10
+            stripe1.x +=10
+            stripe2.x +=10
+            stripe3.x +=10
+            stripe4.x +=10
+            playerDistance -=10
             if(playerDistance >=6000){house.x += 10}
             break
         // move the player down
         case (83):
-            player.y += 15
-            // imgY += 10
+            player.y += 10
             break
         // move the player right and the stripes to the left
         case(68):
-            player.x += 15
-            stripe1.x -=15
-            stripe2.x -=15
-            stripe3.x -=15
-            stripe4.x -=15
+            player.x += 10
+            stripe1.x -=10
+            stripe2.x -=10
+            stripe3.x -=10
+            stripe4.x -=10
             if(playerDistance >= 6000){house.x -=10}
             playerDistance += 10
             break
@@ -269,6 +274,8 @@ const detectHit = () => {
         && player.y < car1.y + car1.height
         && player.y + player.height > car1.y) {
             player.health -= 1
+            car1.x = player.x - car1.width
+            console.log(player.health)
             
         }
     if(player.x + player.width > car2.x
@@ -276,6 +283,7 @@ const detectHit = () => {
         && player.y < car2.y + car2.height
         && player.y + player.height > car2.y) {
             player.health -= 1
+            car2.x = player.x - car2.width
         }
 
 
