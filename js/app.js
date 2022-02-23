@@ -175,11 +175,11 @@ const gameloop = () => {
     player.draw()}
     car1.draw()
     car2.draw()
-    // bus1.draw()
-    if(player.x > 352){player.x = 350}
+    bus1.draw()
+    if(player.x + player.width > 400){player.x = 400 - player.width}
     if(player.x < 0){player.x = 0}
-    if(player.y < 110){player.y = 115}
-    if(player.y > 326){player.y = 325}
+    if(player.y < 110){player.y = 110}
+    if(player.y > 326){player.y = 326}
     if(stripe1.x < -125){stripe1.x = 800}
     if(stripe1.x > 826){stripe1.x = -124}
     if(stripe2.x < -125){stripe2.x = 800}
@@ -234,11 +234,13 @@ const moveCar2 = setInterval(()=>{
     car2.x -= 17
     if (player.alive === false){clearInterval(moveCar2)}
 }, 60)}
-//move the bus
+// move the bus
 const busFunc = () => {
 const moveBus1 = setInterval(()=>{
-
-    if (bus1.x < -1000){bus1.x = 874}
+    if (bus1.x < -1000){
+        bus1.x = 874
+        bus1.y = spawnLocation()
+        }
     bus1.x -= 11
     if(player.alive === false){clearInterval(moveBus1)}
 }, 40)}
@@ -295,6 +297,13 @@ const detectHit = () => {
         && player.y + player.height > car2.y) {
             player.health -= 1
             car2.x = player.x - car2.width
+        }
+    if(player.x + player.width > bus1.x
+        && player.x < bus1.x + bus1.width
+        && player.y < bus1.y + bus1.height
+        && player.y + player.height > bus1.y) {
+            player.health -= 1
+            bus1.x = player.x - bus1.width
         }
 
 
