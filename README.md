@@ -16,6 +16,8 @@ Homie quest is a side-scrolling game where you dodge obstacles to make it to you
 - html, css, javascript, and canvas
 - I designed the sprites on piskellapp.com
 - I used two google fonts: "Faster One" and "VT323"
+- Explosion sound effect from: https://sound-effects.bbcrewind.co.uk/
+- Robot voice is my own
 
 ## Wireframe:
 [whiteboard link] (https://miro.com/app/board/uXjVOLkjH64=/)

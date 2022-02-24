@@ -15,6 +15,7 @@ const interior = document.getElementById("houseInside")
 const explosion = document.getElementById("explosion")
 const couch = document.getElementById("homeSofa")
 const audio = new Audio ("bbc_demolition_07022509_1_1.mp3")
+const roboVoice = new Audio ("robot-voice.mp3")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -153,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const runGame = setInterval(gameloop, 60)
         const isDead = setInterval(() =>{
             if(player.alive === false) {
+                audio.play()
                 clearInterval(runGame)
                 clearInterval(isWin)
                 clearTimeout(moveCar1)
@@ -161,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 blowUp.x = player.x
                 blowUp.y = player.y
                 blowUp.draw()
-                audio.play()
                 setTimeout(()=>{
                     ctx.clearRect(0, 0, canvas.width, canvas.height)
                     game.style.backgroundColor = "green"
@@ -202,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const runGame = setInterval(gameloop, 60)
         const isDead = setInterval(() =>{
             if(player.alive === false) {
+                audio.play()
                 clearInterval(runGame)
                 clearInterval(isWin)
                 clearTimeout(moveCar1)
@@ -413,9 +415,9 @@ const detectHit = (thing) => {
         && player.x < thing.x + thing.width
         && player.y < thing.y + thing.height
         && player.y + player.height > thing.y) {
+            roboVoice.play()
             player.health -= 1
             thing.x = player.x - thing.width
-            console.log(player.health)
             
         }
     if (player.health <= 0){
