@@ -136,7 +136,7 @@ let car1 = new Sprite (redCar, 800, spawnLocation(), 100, 50)
 let car2 = new Sprite (blueCar, 800, spawnLocation(), 100, 60)
 let bus1 = new Sprite (bus, 800, 200,  150, 85)
 let house = new Sprite (homieHouse, 800, 0, 125, 125)
-let homie = new Sprite (myHomie, 200, 250, 150, 150)
+let homie = new Sprite (myHomie, 200, 350, 150, 150)
 let heart1 = new Sprite (heart, 700, 435, 50, 50)
 let heart2 = new Sprite (heart, 650, 435, 50, 50)
 let heart3 = new Sprite (heart, 600, 435, 50, 50)
@@ -279,6 +279,7 @@ const winLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     inside.draw()
     player.x = 100
+    player.y = 400
     player.height = 100
     player.width = 100
     player.draw()
@@ -292,8 +293,8 @@ const winLoop = () => {
         player.width = 100
         player.draw()
         homie.draw()
-        player.y = 100
-        homie.y = 100
+        player.y = 300
+        homie.y = 300
         setTimeout(()=>{
             ctx.clearRect(0, 0, canvas.width, canvas.height)
             inside.draw()
@@ -302,8 +303,8 @@ const winLoop = () => {
             player.width = 100
             player.draw()
             homie.draw()
-            player.y = 150
-            homie.y = 150
+            player.y = 400
+            homie.y = 350
         }, 500)
     }, 1000)
  
