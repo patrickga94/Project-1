@@ -13,6 +13,7 @@ const heart = document.getElementById("heart")
 const gravestone = document.getElementById("graveStone")
 const interior = document.getElementById("houseInside")
 const explosion = document.getElementById("explosion")
+const couch = document.getElementById("homeSofa")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -137,10 +138,14 @@ let heart3 = new Sprite (heart, 600, 435, 50, 50)
 let yourGrave = new Sprite (gravestone, 180, 25, 400, 450)
 let inside = new Sprite (interior, 0, 0, 800, 500)
 let blowUp = new Sprite(explosion, player.x, player.y, 50, 50)
+let sofa = new Sprite(couch, 0, 0, 800, 500)
+let introPlayer = new Sprite(img, 300, 220, 200, 200)
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    sofa.draw()
+    introPlayer.draw()
     document.addEventListener('keydown', movementHandler)
     intro.addEventListener("click", ()=>{
         intro.style.display = "none"
@@ -191,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
         bus1.x = 800
         house.x = 800
         playerDistance = 0
-        console.log("hello")
         deathScreen.style.display = "none"
         const runGame = setInterval(gameloop, 60)
         const isDead = setInterval(() =>{
