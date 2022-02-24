@@ -270,14 +270,14 @@ const gameloop = () => {
     if(player.x < 0){player.x = 0}
     if(player.y < 110){player.y = 110}
     if(player.y > 326){player.y = 326}
-    if(stripe1.x < -125){stripe1.x = 800}
-    if(stripe1.x > 826){stripe1.x = -124}
-    if(stripe2.x < -125){stripe2.x = 800}
-    if(stripe2.x > 826){stripe2.x = -124}
-    if(stripe3.x < -125){stripe3.x = 800}
-    if(stripe3.x > 826){stripe3.x = -124}
-    if(stripe4.x < -125){stripe4.x = 800}
-    if(stripe4.x > 826){stripe4.x = -124}
+    if(stripe1.x < -100){stripe1.x = 800}
+    if(stripe1.x > 800){stripe1.x = -100}
+    if(stripe2.x < -100){stripe2.x = 800}
+    if(stripe2.x > 800){stripe2.x = -100}
+    if(stripe3.x < -100){stripe3.x = 800}
+    if(stripe3.x > 800){stripe3.x = -100}
+    if(stripe4.x < -100){stripe4.x = 800}
+    if(stripe4.x > 800){stripe4.x = -100}
     if(playerDistance >= 6000){house.draw()}
     detectHit(car1)
     detectHit(car2)
