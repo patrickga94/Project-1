@@ -12,6 +12,7 @@ const myHomie = document.getElementById("homie")
 const heart = document.getElementById("heart")
 const gravestone = document.getElementById("graveStone")
 const interior = document.getElementById("houseInside")
+const explosion = document.getElementById("explosion")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -27,15 +28,10 @@ class Sprite {
         this.y = y,
         this.width = width,
         this.height = height,
-        this.health = 3
-        this.alive = true
         this.draw = function () {
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
         }
-
-
     }
-
 }
 
 class PlayerSprite {
@@ -59,7 +55,6 @@ class PlayerSprite {
 
 
     }
-    //add a setDirection method as well as an unsetDirection method.
     setDirection = function (key) {
         //pressing key(keydown), changes direction from false to true
         if(key.toLowerCase() == "w") {this.direction.up = true}
@@ -68,9 +63,8 @@ class PlayerSprite {
         if(key.toLowerCase() == "d") {this.direction.right = true}
 
     }
-    //this method will unset our direction when the key is lifted
     unsetDirection = function (key) {
-        //pressing key(keydown), changes direction from false to true
+        //releasing key(keyup), changes direction from false to true
         if(key.toLowerCase() == "w") {this.direction.up = false}
         if(key.toLowerCase() == "a") {this.direction.left = false}
         if(key.toLowerCase() == "s") {this.direction.down = false}
@@ -142,6 +136,7 @@ let heart2 = new Sprite (heart, 650, 435, 50, 50)
 let heart3 = new Sprite (heart, 600, 435, 50, 50)
 let yourGrave = new Sprite (gravestone, 180, 25, 400, 450)
 let inside = new Sprite (interior, 0, 0, 800, 500)
+let blowUp = new Sprite(explosion, player.x, player.y, 50, 50)
 
 
 
@@ -157,11 +152,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearTimeout(moveCar1)
                 clearTimeout(moveCar2)
                 clearTimeout(moveBus)
-                ctx.clearRect(0, 0, canvas.width, canvas.height)
-                game.style.backgroundColor = "green"
-                yourGrave.draw()
-                deathScreen.style.display = "block"
-                clearInterval(isDead)
+                blowUp.x = player.x
+                blowUp.y = player.y
+                blowUp.draw()
+                setTimeout(()=>{
+                    ctx.clearRect(0, 0, canvas.width, canvas.height)
+                    game.style.backgroundColor = "green"
+                    yourGrave.draw()
+                    deathScreen.style.display = "block"
+                    clearInterval(isDead)
+                }, 500)
 
             }
         })
@@ -201,11 +201,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearTimeout(moveCar1)
                 clearTimeout(moveCar2)
                 clearTimeout(moveBus)
-                ctx.clearRect(0, 0, canvas.width, canvas.height)
-                game.style.backgroundColor = "green"
-                yourGrave.draw()
-                deathScreen.style.display = "block"
-                clearInterval(isDead)
+                blowUp.x = player.x
+                blowUp.y = player.y
+                blowUp.draw()
+                    setTimeout(()=>{
+                    ctx.clearRect(0, 0, canvas.width, canvas.height)
+                    game.style.backgroundColor = "green"
+                    yourGrave.draw()
+                    deathScreen.style.display = "block"
+                    clearInterval(isDead)
+                }, 500)
 
             }
         })

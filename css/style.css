@@ -2,13 +2,44 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: aliceblue;
+    background-color: rgb(170, 182, 192);
     font-family: 'VT323', monospace;
 }
 h1 {
     font-family: 'Faster One', cursive;
     align-self: center;
     font-size: 75px;
+}
+
+#h {
+    color: red;
+}
+#o {
+    color: orange;
+}
+#m {
+    color: yellow;
+}
+#i {
+    color: green;
+}
+#e1 {
+    color: blue;
+}
+#q {
+    color: indigo;
+}
+#u {
+    color: violet;
+}
+#e2{
+    color: red;
+}
+#s{
+    color: orange;
+}
+#t{
+    color: yellow;
 }
 
 #introScreen {
