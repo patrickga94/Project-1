@@ -7,6 +7,7 @@ body {
 }
 h1 {
     align-self: center;
+    font-size: 75px;
 }
 
 #introScreen {
@@ -14,7 +15,8 @@ h1 {
     background-color: white;
     border: 2px dotted black;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
+    font-size: 20px;
 }
 
 #deathScreen {
@@ -23,7 +25,8 @@ h1 {
     border: 2px dotted black;
     display: none;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
+    font-size: 20px;
 }
 
 #winScreen {
@@ -32,7 +35,8 @@ h1 {
     border: 2px dotted black;
     display: none;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
+    font-size: 20px;
 }
 
 img {
@@ -50,4 +54,5 @@ img {
     width: 800px;
     height: 500px;
     border: 10px solid black;
+    border-radius: 25px;
 }

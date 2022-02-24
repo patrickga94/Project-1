@@ -1,4 +1,3 @@
-console.log("hello")
 const game = document.getElementById("canvas")
 const intro = document.getElementById("introScreen")
 const deathScreen = document.getElementById("deathScreen")
@@ -10,6 +9,8 @@ const blueCar = document.getElementById("blueCar")
 const bus = document.getElementById("bus")
 const homieHouse = document.getElementById("house")
 const myHomie = document.getElementById("homie")
+const heart = document.getElementById("heart")
+const gravestone = document.getElementById("graveStone")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -57,58 +58,51 @@ class PlayerSprite {
 
 
     }
-            //add a setDirection method as well as an unsetDirection method.
-            setDirection = function (key) {
-                //pressing key(keydown), changes direction from false to true
-                if(key.toLowerCase() == "w") {this.direction.up = true}
-                if(key.toLowerCase() == "a") {this.direction.left = true}
-                if(key.toLowerCase() == "s") {this.direction.down = true}
-                if(key.toLowerCase() == "d") {this.direction.right = true}
-        
-            }
-            //this method will unset our direction when the key is lifted
-            unsetDirection = function (key) {
-                //pressing key(keydown), changes direction from false to true
-                if(key.toLowerCase() == "w") {this.direction.up = false}
-                if(key.toLowerCase() == "a") {this.direction.left = false}
-                if(key.toLowerCase() == "s") {this.direction.down = false}
-                if(key.toLowerCase() == "d") {this.direction.right = false}
-        
-            }
-            movePlayer = function () {
-                //movePlayer will take and look at the direction that is set
-                //movePlayer will then send the guy flying in that direction
-                //move up
-                if (this.direction.up){
-                    this.y -= 10
-                    //because we're tracking up movement we'll add our top of canvas case
-                    if(this.y <= 0){
-                        this.y = 0
-                    }
-                }
-                if (this.direction.left){
-                    this.x -= 10
-                    if(this.x <= 0){
-                        this.x = 0
-                    }
-                }
-                if (this.direction.down){
-                    this.y += 10
-                    if(this.y + this.height >= game.height){
-                        this.y = game.height - this.height
-                    }
-            }
-            if (this.direction.right){
-                this.x += 10
-                if(this.x + this.width >= game.width){
-                    this.x = game.width - this.width
-                }
+    //add a setDirection method as well as an unsetDirection method.
+    setDirection = function (key) {
+        //pressing key(keydown), changes direction from false to true
+        if(key.toLowerCase() == "w") {this.direction.up = true}
+        if(key.toLowerCase() == "a") {this.direction.left = true}
+        if(key.toLowerCase() == "s") {this.direction.down = true}
+        if(key.toLowerCase() == "d") {this.direction.right = true}
+
+    }
+    //this method will unset our direction when the key is lifted
+    unsetDirection = function (key) {
+        //pressing key(keydown), changes direction from false to true
+        if(key.toLowerCase() == "w") {this.direction.up = false}
+        if(key.toLowerCase() == "a") {this.direction.left = false}
+        if(key.toLowerCase() == "s") {this.direction.down = false}
+        if(key.toLowerCase() == "d") {this.direction.right = false}
+
+    }
+    movePlayer = function () {
+        if (this.direction.up){
+            this.y -= 10
+            if(this.y <= 0){
+                this.y = 0
             }
         }
+        if (this.direction.left){
+            this.x -= 10
+            if(this.x <= 0){
+                this.x = 0
+            }
+        }
+        if (this.direction.down){
+            this.y += 10
+            if(this.y + this.height >= game.height){
+                this.y = game.height - this.height
+            }
+        }
+        if (this.direction.right){
+            this.x += 10
+            if(this.x + this.width >= game.width){
+                this.x = game.width - this.width
+            }
+        }
+    }
 }
-
-
-
 
 
 
@@ -141,7 +135,12 @@ let car1 = new Sprite (redCar, 800, spawnLocation(), 100, 50)
 let car2 = new Sprite (blueCar, 800, spawnLocation(), 100, 60)
 let bus1 = new Sprite (bus, 800, 200,  150, 85)
 let house = new Sprite (homieHouse, 800, 0, 125, 125)
-let homie = new Sprite (myHomie, 650, 250, 150, 150)
+let homie = new Sprite (myHomie, 200, 250, 150, 150)
+let heart1 = new Sprite (heart, 700, 435, 50, 50)
+let heart2 = new Sprite (heart, 650, 435, 50, 50)
+let heart3 = new Sprite (heart, 600, 435, 50, 50)
+let yourGrave = new Sprite (gravestone, 180, 25, 400, 450)
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -152,19 +151,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const isDead = setInterval(() =>{
             if(player.alive === false) {
                 clearInterval(runGame)
-                clearInterval(isHit)
                 clearInterval(isWin)
                 clearTimeout(moveCar1)
                 clearTimeout(moveCar2)
                 clearTimeout(moveBus)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
+                game.style.backgroundColor = "green"
+                yourGrave.draw()
                 deathScreen.style.display = "block"
                 clearInterval(isDead)
 
             }
         })
 
-        const isHit = setInterval(detectHit, 60)
         const isWin = setInterval(detectWin, 60)
         const moveCar1 = setTimeout(carFunc, 1000)
         const moveCar2 = setTimeout(carFunc2, 5000)
@@ -172,7 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const playerWon = setInterval(()=>{
             if(player.win){
-                clearInterval(isHit)
                 clearInterval(runGame)
                 winLoop()
                 clearInterval(playerWon)
@@ -181,6 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
 
     deathScreen.addEventListener("click", ()=>{
+        game.style.backgroundColor = "rgb(22, 21, 21)"
         player.health = 3
         player.alive = true
         player.x = 10
@@ -196,29 +195,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const isDead = setInterval(() =>{
             if(player.alive === false) {
                 clearInterval(runGame)
-                clearInterval(isHit)
                 clearInterval(isWin)
                 clearTimeout(moveCar1)
                 clearTimeout(moveCar2)
                 clearTimeout(moveBus)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
+                game.style.backgroundColor = "green"
+                yourGrave.draw()
                 deathScreen.style.display = "block"
                 clearInterval(isDead)
 
             }
         })
 
-
-        const isHit = setInterval(detectHit, 60)
         const isWin = setInterval(detectWin, 60)
         const moveCar1 = setTimeout(carFunc, 1000)
         const moveCar2 = setTimeout(carFunc2, 5000)
         const moveBus = setTimeout(busFunc, 10000)
 
-
         const playerWon = setInterval(()=>{
             if(player.win){
-                clearInterval(isHit)
                 clearInterval(runGame)
                 winLoop()
                 clearInterval(playerWon)
@@ -239,11 +235,22 @@ const gameloop = () => {
     stripe3.render()
     stripe4.render()
     if(player.alive){
-    player.draw()}
+        player.draw()
+    }
     player.movePlayer()
     car1.draw()
     car2.draw()
     bus1.draw()
+    if(player.health === 3){
+        heart1.draw()
+        heart2.draw()
+        heart3.draw()
+    } else if (player.health === 2){
+        heart1.draw()
+        heart2.draw()
+    } else {
+        heart1.draw()
+    }
     if(player.x + player.width > 400){player.x = 400 - player.width}
     if(player.x < 0){player.x = 0}
     if(player.y < 110){player.y = 110}
@@ -257,6 +264,9 @@ const gameloop = () => {
     if(stripe4.x < -125){stripe4.x = 800}
     if(stripe4.x > 826){stripe4.x = -124}
     if(playerDistance >= 6000){house.draw()}
+    detectHit(car1)
+    detectHit(car2)
+    detectHit(bus1)
     
 }
 
@@ -277,7 +287,6 @@ const winLoop = () => {
         player.height = 100
         player.width = 100
         player.draw()
-        // player.movePlayer()
         homie.draw()
         player.y = 100
         homie.y = 100
@@ -287,23 +296,12 @@ const winLoop = () => {
             player.height = 100
             player.width = 100
             player.draw()
-            // player.movePlayer()
             homie.draw()
             player.y = 150
             homie.y = 150
         }, 500)
     }, 1000)
-    // setInterval(()=>{
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //     player.x = 100
-    //     player.height = 100
-    //     player.width = 100
-    //     player.draw()
-    //     // player.movePlayer()
-    //     homie.draw()
-    //     player.y = 150
-    //     homie.y = 150
-    // }, 2000)
+ 
     document.getElementById("winScreen").style.display = "block"
 
 }
@@ -393,37 +391,19 @@ const movementHandler = (e) => {
 
 //test for collisison with car and subtract one health
 //when health = 0 kill the player
-const detectHit = () => {
-    if(player.x + player.width > car1.x
-        && player.x < car1.x + car1.width
-        && player.y < car1.y + car1.height
-        && player.y + player.height > car1.y) {
+const detectHit = (thing) => {
+    if(player.x + player.width > thing.x
+        && player.x < thing.x + thing.width
+        && player.y < thing.y + thing.height
+        && player.y + player.height > thing.y) {
             player.health -= 1
-            car1.x = player.x - car1.width
+            thing.x = player.x - thing.width
             console.log(player.health)
             
         }
-    if(player.x + player.width > car2.x
-        && player.x < car2.x + car2.width
-        && player.y < car2.y + car2.height
-        && player.y + player.height > car2.y) {
-            player.health -= 1
-            car2.x = player.x - car2.width
-        }
-    if(player.x + player.width > bus1.x
-        && player.x < bus1.x + bus1.width
-        && player.y < bus1.y + bus1.height
-        && player.y + player.height > bus1.y) {
-            player.health -= 1
-            bus1.x = player.x - bus1.width
-        }
-
-
     if (player.health <= 0){
         player.alive = false
     }
-    
-   
 }
 
 const detectWin = () => {
@@ -433,5 +413,4 @@ const detectWin = () => {
         && player.y + player.height > house.y) {
             player.win = true
         }
-
 }
