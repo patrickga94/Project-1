@@ -296,7 +296,6 @@ const winLoop = () => {
     player.height = 100
     player.width = 100
     player.draw()
-    // player.movePlayer()
     homie.draw()
     setInterval(()=>{
         ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -359,13 +358,10 @@ const moveBus1 = setInterval(()=>{
 }, 40)}
 
 document.addEventListener("keydown", (e)=>{
-    //when the key is pressed change the direction according to the setDirection HeroCrawler method
     player.setDirection(e.key)
 })
 
 document.addEventListener("keyup", (e)=>{
-    //now if any of the keys that are released correspond to a movement key
-    //change the corresponding direction to false
     if(["w", "a", "s", "d"].includes(e.key)){
         player.unsetDirection(e.key)
     }
@@ -374,33 +370,20 @@ document.addEventListener("keyup", (e)=>{
 
 const movementHandler = (e) => {
     switch (e.keyCode) {
-        case(87):
-        // move the player up
-            // player.y -= 10
-            break
-        // move the player left and the stripes to the right
         case(65):
-            // player.x -= 10
             stripe1.x +=10
             stripe2.x +=10
             stripe3.x +=10
             stripe4.x +=10
-            // if(player.height === 100) {homie.x +=10}
             playerDistance -=10
             if(playerDistance >=6000){house.x += 10}
             break
-        // move the player down
-        case (83):
-            // player.y += 10
-            break
         // move the player right and the stripes to the left
         case(68):
-            // player.x += 10
             stripe1.x -=10
             stripe2.x -=10
             stripe3.x -=10
             stripe4.x -=10
-            // if(player.height === 100) {homie.x -=10}
             if(playerDistance >= 6000){house.x -=10}
             playerDistance += 10
             break
