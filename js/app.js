@@ -14,6 +14,7 @@ const gravestone = document.getElementById("graveStone")
 const interior = document.getElementById("houseInside")
 const explosion = document.getElementById("explosion")
 const couch = document.getElementById("homeSofa")
+const audio = new Audio ("bbc_demolition_07022509_1_1.mp3")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -160,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 blowUp.x = player.x
                 blowUp.y = player.y
                 blowUp.draw()
+                audio.play()
                 setTimeout(()=>{
                     ctx.clearRect(0, 0, canvas.width, canvas.height)
                     game.style.backgroundColor = "green"
