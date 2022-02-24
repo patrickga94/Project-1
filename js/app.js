@@ -11,6 +11,7 @@ const homieHouse = document.getElementById("house")
 const myHomie = document.getElementById("homie")
 const heart = document.getElementById("heart")
 const gravestone = document.getElementById("graveStone")
+const interior = document.getElementById("houseInside")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -140,6 +141,7 @@ let heart1 = new Sprite (heart, 700, 435, 50, 50)
 let heart2 = new Sprite (heart, 650, 435, 50, 50)
 let heart3 = new Sprite (heart, 600, 435, 50, 50)
 let yourGrave = new Sprite (gravestone, 180, 25, 400, 450)
+let inside = new Sprite (interior, 0, 0, 800, 500)
 
 
 
@@ -275,6 +277,7 @@ const gameloop = () => {
 //when you win
 const winLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    inside.draw()
     player.x = 100
     player.height = 100
     player.width = 100
@@ -283,6 +286,7 @@ const winLoop = () => {
     homie.draw()
     setInterval(()=>{
         ctx.clearRect(0, 0, canvas.width, canvas.height)
+        inside.draw()
         player.x = 100
         player.height = 100
         player.width = 100
@@ -292,6 +296,7 @@ const winLoop = () => {
         homie.y = 100
         setTimeout(()=>{
             ctx.clearRect(0, 0, canvas.width, canvas.height)
+            inside.draw()
             player.x = 100
             player.height = 100
             player.width = 100
