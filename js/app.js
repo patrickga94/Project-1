@@ -16,6 +16,7 @@ const explosion = document.getElementById("explosion")
 const couch = document.getElementById("homeSofa")
 const audio = new Audio ("bbc_demolition_07022509_1_1.mp3")
 const roboVoice = new Audio ("robot-voice.mp3")
+const bottle = document.getElementById("beer")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -46,6 +47,7 @@ class PlayerSprite {
         this.height = height,
         this.health = 3
         this.alive = true
+        this.beer = 0,
         this.direction = {
             up: false,
             down: false,
@@ -142,6 +144,14 @@ let inside = new Sprite (interior, 0, 0, 800, 500)
 let blowUp = new Sprite(explosion, player.x, player.y, 50, 50)
 let sofa = new Sprite(couch, 0, 0, 800, 500)
 let introPlayer = new Sprite(img, 300, 220, 200, 200)
+let beerBottle = new Sprite(bottle, 900, spawnLocation(), 50, 50)
+let beer1 = new Sprite(bottle, 10, 435, 50, 50)
+let beer2 = new Sprite(bottle, 60, 435, 50, 50)
+let beer3 = new Sprite(bottle, 110, 435, 50, 50)
+let beer4 = new Sprite(bottle, 160, 435, 50, 50)
+let beer5 = new Sprite(bottle, 210, 435, 50, 50)
+let beer6 = new Sprite(bottle, 260, 435, 50, 50)
+
 
 
 
@@ -162,8 +172,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearTimeout(moveBus)
                 blowUp.x = player.x
                 blowUp.y = player.y
-                blowUp.draw()
+                    blowUp.draw()
                 setTimeout(()=>{
+                    ctx.clearRect(0, 0, canvas.width, canvas.height)
                     ctx.clearRect(0, 0, canvas.width, canvas.height)
                     game.style.backgroundColor = "green"
                     yourGrave.draw()
@@ -191,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     deathScreen.addEventListener("click", ()=>{
         game.style.backgroundColor = "rgb(22, 21, 21)"
         player.health = 3
+        player.beer = 0
         player.alive = true
         player.x = 10
         player.y = 200
@@ -209,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearTimeout(moveCar1)
                 clearTimeout(moveCar2)
                 clearTimeout(moveBus)
+                document.getElementById("needMore").style.display = "none"
                 blowUp.x = player.x
                 blowUp.y = player.y
                 blowUp.draw()
@@ -253,6 +266,7 @@ const gameloop = () => {
         player.draw()
     }
     player.movePlayer()
+    beerBottle.draw()
     car1.draw()
     car2.draw()
     bus1.draw()
@@ -266,6 +280,39 @@ const gameloop = () => {
     } else {
         heart1.draw()
     }
+    if(player.beer === 1){
+        beer1.draw()
+    }
+    if(player.beer === 2){
+        beer1.draw()
+        beer2.draw()
+    }
+    if(player.beer === 3){
+        beer1.draw()
+        beer2.draw()
+        beer3.draw()
+    }
+    if(player.beer === 4){
+        beer1.draw()
+        beer2.draw()
+        beer3.draw()
+        beer4.draw()
+    }
+    if(player.beer === 5){
+        beer1.draw()
+        beer2.draw()
+        beer3.draw()
+        beer4.draw()
+        beer5.draw()
+    }
+    if(player.beer >= 6){
+        beer1.draw()
+        beer2.draw()
+        beer3.draw()
+        beer4.draw()
+        beer5.draw()
+        beer6.draw()
+    }
     if(player.x + player.width > 400){player.x = 400 - player.width}
     if(player.x < 0){player.x = 0}
     if(player.y < 110){player.y = 110}
@@ -278,10 +325,15 @@ const gameloop = () => {
     if(stripe3.x > 800){stripe3.x = -100}
     if(stripe4.x < -100){stripe4.x = 800}
     if(stripe4.x > 800){stripe4.x = -100}
+    if(beerBottle.x <= 0-beerBottle.width){
+        beerBottle.x = 1000
+        beerBottle.y = spawnLocation()
+    }
     if(playerDistance >= 6000){house.draw()}
     detectHit(car1)
     detectHit(car2)
     detectHit(bus1)
+    detectBeer()
     
 }
 
@@ -384,6 +436,7 @@ const movementHandler = (e) => {
             stripe2.x -=10
             stripe3.x -=10
             stripe4.x -=10
+            beerBottle.x -= 10
             if(playerDistance >= 6000){house.x -=10}
             playerDistance += 10
             break
@@ -408,11 +461,32 @@ const detectHit = (thing) => {
     }
 }
 
+const detectBeer = () => {
+    if(player.x + player.width > beerBottle.x
+        && player.x < beerBottle.x + beerBottle.width
+        && player.y < beerBottle.y + beerBottle.height
+        && player.y + player.height > beerBottle.y) {
+            beerBottle.x = 1000
+            player.beer += 1
+            console.log("my amount of beer is: ", player.beer)
+            console.log("beer.x is: ", beerBottle.x)
+            beerBottle.y = spawnLocation()
+        }
+    }
+
 const detectWin = () => {
     if(player.x + player.width > house.x
         && player.x < house.x + house.width
         && player.y < house.y + house.height
-        && player.y + player.height > house.y) {
+        && player.y + player.height > house.y
+        && player.beer >= 5) {
+            document.getElementById("needMore").style.display = "none"
             player.win = true
-        }
+        } else if(player.x + player.width > house.x
+            && player.x < house.x + house.width
+            && player.y < house.y + house.height
+            && player.y + player.height > house.y){
+                document.getElementById("needMore").style.display = "block"
+
+            }
 }

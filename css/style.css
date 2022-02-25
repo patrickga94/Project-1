@@ -61,6 +61,16 @@ h1 {
     font-size: 20px;
 }
 
+#needMore {
+    color: black;
+    background-color: white;
+    border: 2px dotted black;
+    display: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+}
+
 #winScreen {
     color: black;
     background-color: white;
