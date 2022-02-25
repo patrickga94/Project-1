@@ -4,14 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Faster+One&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title>Homie Quest</title>
 </head>
 <body>
-    <h1>HOMIE QUEST</h1>
+    <h1>
+        <span id="h">H</span>
+        <span id="o">O</span>
+        <span id="m">M</span>
+        <span id="i">I</span>
+        <span id="e1">E</span>
+        <span id="space">  </span>
+        <span id="q">Q</span>
+        <span id="u">U</span>
+        <span id="e2">E</span>
+        <span id="s">S</span>
+        <span id="t">T</span>  </h1>
     <div id="container">
         <main>
             <canvas id="canvas"></canvas>
+            <div id="introScreen">Your homie has invited you to chill<br>
+            Use WASD to avoid the cars on the street and make it to your homie's house<br>
+            And make sure you pick up some beverages on the way!<br>
+            Click here to begin!</div>
+            <div id="deathScreen">You have perished on your way to your homie's house<br>
+            Your homie is inconsolable and will never recover from this tragedy<br>
+            Click here to try again</div>
+            <div id="winScreen">You made it!<br>
+            Enjoy chilling with your homie!</div>
+            <div id="needMore">Homie! <br>
+            That's not nearly enough beer! <br>
+            Come back when you've grabbed a couple more.</div>
+            <img src="homiequest-1.png.png" id="playerSprite">
+            <img src="New Piskel-1.png.png" alt="" id="redCar">
+            <img src="New Piskel-2.png.png" alt="" id="blueCar">
+            <img src="Homie quest sprites-5.png.png" alt="" id="bus">
+            <img src="Homie quest sprites-6.png.png" alt="" id="house">
+            <img src="Player Character-3.png.png" alt="" id="homie">
+            <img src="Homie quest sprites-7.png.png" alt="" id="heart">
+            <img src="New Piskel-3.png.png" alt="" id="graveStone">
+            <img src="New Piskel-4.png (1).png" alt="" id="houseInside">
+            <img src="New Piskel-5.png.png" alt="" id="explosion">
+            <img src="New Piskel-6.png.png" alt="" id="homeSofa">
+            <img src="New Piskel-7.png.png" alt="" id="beer">
         </main>
     </div>
     <script src = "js/app.js"></script>    
