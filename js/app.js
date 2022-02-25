@@ -220,6 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const isDead = setInterval(() =>{
             if(player.alive === false) {
                 audio.play()
+                document.getElementById("needMore").style.display = "none"
                 clearInterval(runGame)
                 clearInterval(isWin)
                 clearTimeout(moveCar1)
