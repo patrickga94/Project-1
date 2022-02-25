@@ -139,6 +139,8 @@ let homie = new Sprite (myHomie, 200, 350, 150, 150)
 let heart1 = new Sprite (heart, 700, 435, 50, 50)
 let heart2 = new Sprite (heart, 650, 435, 50, 50)
 let heart3 = new Sprite (heart, 600, 435, 50, 50)
+let heart4 = new Sprite (heart, 550, 435, 50, 50)
+let collectableHeart = new Sprite(heart, 800, spawnLocation(), 50, 50)
 let yourGrave = new Sprite (gravestone, 180, 25, 400, 450)
 let inside = new Sprite (interior, 0, 0, 800, 500)
 let blowUp = new Sprite(explosion, player.x, player.y, 50, 50)
@@ -211,6 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bus1.x = 800
         house.x = 800
         playerDistance = 0
+        collectableHeart.x = 800
         deathScreen.style.display = "none"
         const runGame = setInterval(gameloop, 60)
         const isDead = setInterval(() =>{
@@ -270,7 +273,15 @@ const gameloop = () => {
     car1.draw()
     car2.draw()
     bus1.draw()
-    if(player.health === 3){
+    if(playerDistance >= 3000){
+        collectableHeart.draw()
+    }
+    if (player.health === 4){
+    heart1.draw()
+    heart2.draw()
+    heart3.draw()
+    heart4.draw()
+    } else if(player.health === 3){
         heart1.draw()
         heart2.draw()
         heart3.draw()
@@ -313,7 +324,9 @@ const gameloop = () => {
         beer5.draw()
         beer6.draw()
     }
-    if(player.x + player.width > 400){player.x = 400 - player.width}
+    if(player.x + player.width > 400){
+        player.x = 400 - player.width
+    }
     if(player.x < 0){player.x = 0}
     if(player.y < 110){player.y = 110}
     if(player.y > 326){player.y = 326}
@@ -334,6 +347,7 @@ const gameloop = () => {
     detectHit(car2)
     detectHit(bus1)
     detectBeer()
+    detectHeart()
     
 }
 
@@ -437,6 +451,7 @@ const movementHandler = (e) => {
             stripe3.x -=10
             stripe4.x -=10
             beerBottle.x -= 10
+            if(playerDistance >= 3000){collectableHeart.x -= 10}
             if(playerDistance >= 6000){house.x -=10}
             playerDistance += 10
             break
@@ -468,11 +483,19 @@ const detectBeer = () => {
         && player.y + player.height > beerBottle.y) {
             beerBottle.x = 1000
             player.beer += 1
-            console.log("my amount of beer is: ", player.beer)
-            console.log("beer.x is: ", beerBottle.x)
             beerBottle.y = spawnLocation()
         }
     }
+
+const detectHeart = () => {
+    if(player.x + player.width > collectableHeart.x
+        && player.x < collectableHeart.x + collectableHeart.width
+        && player.y < collectableHeart.y + collectableHeart.height
+        && player.y + player.height > collectableHeart.y) {
+            player.health += 1
+            collectableHeart.x = -100
+        }
+}
 
 const detectWin = () => {
     if(player.x + player.width > house.x
