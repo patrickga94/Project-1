@@ -220,7 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const isDead = setInterval(() =>{
             if(player.alive === false) {
                 audio.play()
-                document.getElementById("needMore").style.display = "none"
                 clearInterval(runGame)
                 clearInterval(isWin)
                 clearTimeout(moveCar1)
@@ -513,6 +512,10 @@ const detectWin = () => {
             && player.y < house.y + house.height
             && player.y + player.height > house.y){
                 document.getElementById("needMore").style.display = "block"
+                setTimeout(()=>{
+                    document.getElementById("needMore").style.display = "none"
+
+                }, 3000)
 
             }
 }
