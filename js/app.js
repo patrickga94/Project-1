@@ -17,6 +17,7 @@ const couch = document.getElementById("homeSofa")
 const audio = new Audio ("bbc_demolition_07022509_1_1.mp3")
 const roboVoice = new Audio ("robot-voice.mp3")
 const bottle = document.getElementById("beer")
+const ohYeah = new Audio ("zapsplat_human_male_shout_oh_yeah_happy_celebrate_001_14411.mp3")
 
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -366,6 +367,7 @@ const winLoop = () => {
     setInterval(()=>{
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         inside.draw()
+        ohYeah.play()
         player.x = 100
         player.height = 100
         player.width = 100
