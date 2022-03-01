@@ -22,10 +22,12 @@ const ohYeah = new Audio ("zapsplat_human_male_shout_oh_yeah_happy_celebrate_001
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 
-
+//keeps track of the player's travelled distance
+//Spawns the collectable heart and homie's house after a certain distance
 let playerDistance = 0
 
 
+//the class for non playable characters/items
 class Sprite {
     constructor (image, x, y, width, height) {
         this.image = image,
@@ -39,6 +41,7 @@ class Sprite {
     }
 }
 
+//player character class
 class PlayerSprite {
     constructor (image, x, y, width, height) {
         this.image = image,
@@ -106,7 +109,7 @@ class PlayerSprite {
 }
 
 
-
+//class for the grass and road stripes
 class Block {
     constructor (x, y, color, height, width) {
         this.x = x,
@@ -121,10 +124,13 @@ class Block {
     }
 }
 
+//function for getting a random y coordinate on the road
 const spawnLocation = () => {
     return Math.floor(Math.random() * (315-125) + 125)
 }
 
+
+//this is everything that will get drawn in the game
 let stripe1 = new Block(0, 240, "yellow", 100, 10)
 let stripe2 = new Block(200, 240, "yellow", 100, 10)
 let stripe3 = new Block(400, 240, "yellow", 100, 10)
@@ -159,12 +165,16 @@ let beer6 = new Sprite(bottle, 260, 435, 50, 50)
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    //draws the initial scene
     sofa.draw()
     introPlayer.draw()
+    //adds the movement
     document.addEventListener('keydown', movementHandler)
+    //click to start the game
     intro.addEventListener("click", ()=>{
         intro.style.display = "none"
         const runGame = setInterval(gameloop, 60)
+        //check if the player has died and go to the death screen
         const isDead = setInterval(() =>{
             if(player.alive === false) {
                 audio.play()
@@ -187,12 +197,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
         })
-
+        //check if the player has won
         const isWin = setInterval(detectWin, 60)
+        //move the first car after 1 second
         const moveCar1 = setTimeout(carFunc, 1000)
+        //move the second car after 5 seconds
         const moveCar2 = setTimeout(carFunc2, 5000)
+        //move the bus after 9 seconds
         const moveBus = setTimeout(busFunc, 9000)
 
+        //if the player has won this clears the game loop and sets up the win screen
         const playerWon = setInterval(()=>{
             if(player.win){
                 clearInterval(runGame)
@@ -202,6 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 60)
         })
 
+    //creates a reset button if the player dies
     deathScreen.addEventListener("click", ()=>{
         game.style.backgroundColor = "rgb(22, 21, 21)"
         player.health = 3
@@ -257,6 +272,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
 })
+
+//sets everything up for gameplay
 const gameloop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     
@@ -325,6 +342,7 @@ const gameloop = () => {
         beer5.draw()
         beer6.draw()
     }
+    //this keeps everything on the screen
     if(player.x + player.width > 400){
         player.x = 400 - player.width
     }
@@ -343,6 +361,7 @@ const gameloop = () => {
         beerBottle.x = 1000
         beerBottle.y = spawnLocation()
     }
+    //draws the homie house after a certain distance
     if(playerDistance >= 6000){house.draw()}
     detectHit(car1)
     detectHit(car2)
@@ -425,10 +444,12 @@ const moveBus1 = setInterval(()=>{
     if(player.alive === false){clearInterval(moveBus1)}
 }, 40)}
 
+//the event listener for movement on a key press
 document.addEventListener("keydown", (e)=>{
     player.setDirection(e.key)
 })
 
+//the event listener to end movement when a key is released
 document.addEventListener("keyup", (e)=>{
     if(["w", "a", "s", "d"].includes(e.key)){
         player.unsetDirection(e.key)
@@ -439,6 +460,7 @@ document.addEventListener("keyup", (e)=>{
 const movementHandler = (e) => {
     switch (e.keyCode) {
         case(65):
+            //move the stripes to the right and decrease player distance
             stripe1.x +=10
             stripe2.x +=10
             stripe3.x +=10
@@ -446,7 +468,7 @@ const movementHandler = (e) => {
             playerDistance -=10
             if(playerDistance >=6000){house.x += 10}
             break
-        // move the player right and the stripes to the left
+        // move the stripes and beer bottle to the left and increase player distance
         case(68):
             stripe1.x -=10
             stripe2.x -=10
@@ -478,6 +500,7 @@ const detectHit = (thing) => {
     }
 }
 
+//test for collision with beer and adds to player.beer
 const detectBeer = () => {
     if(player.x + player.width > beerBottle.x
         && player.x < beerBottle.x + beerBottle.width
@@ -489,6 +512,7 @@ const detectBeer = () => {
         }
     }
 
+//test for collision with the collectable heart
 const detectHeart = () => {
     if(player.x + player.width > collectableHeart.x
         && player.x < collectableHeart.x + collectableHeart.width
@@ -499,6 +523,8 @@ const detectHeart = () => {
         }
 }
 
+//test for collision with homie's house and change player.win to true if you've collected
+//enough beer
 const detectWin = () => {
     if(player.x + player.width > house.x
         && player.x < house.x + house.width
